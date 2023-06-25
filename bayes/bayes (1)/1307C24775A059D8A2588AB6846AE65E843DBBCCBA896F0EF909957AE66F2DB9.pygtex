@@ -1,0 +1,49 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{prior\PYGZus{}probability}\PYG{p}{(}\PYG{n}{ntag}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{record}\PYG{p}{:}\PYG{n+nb}{bool}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n+nb}{float}\PYG{p}{:}
+    \PYG{n}{ntag\PYGZus{}num}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{sample}\PYG{p}{)):}
+        \PYG{k}{if} \PYG{n}{tag}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{==}\PYG{n}{ntag}\PYG{p}{:}
+            \PYG{n}{ntag\PYGZus{}num}\PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{noise}\PYG{p}{)):}
+        \PYG{k}{if} \PYG{n}{noise\PYGZus{}tag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{==}\PYG{n}{ntag}\PYG{p}{:}
+            \PYG{n}{ntag\PYGZus{}num}\PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{n}{result}\PYG{o}{=}\PYG{n}{ntag\PYGZus{}num}\PYG{o}{/}\PYG{p}{(}\PYG{n}{total\PYGZus{}samplenum}\PYG{o}{+}\PYG{n}{noise\PYGZus{}num}\PYG{p}{)}
+    \PYG{k}{if} \PYG{n}{record}\PYG{p}{:}
+        \PYG{n}{data\PYGZus{}row}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{result}
+
+\PYG{k}{def} \PYG{n+nf}{conditional\PYGZus{}probability}\PYG{p}{(}\PYG{n}{conclusion}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{condition}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{seq}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{)}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n+nb}{float}\PYG{p}{:}
+    \PYG{n}{Ixy}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{n}{Iy}\PYG{o}{=}\PYG{n}{prior\PYGZus{}probability}\PYG{p}{(}\PYG{n}{conclusion}\PYG{p}{,}\PYG{k+kc}{False}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{total\PYGZus{}samplenum}\PYG{o}{+}\PYG{n}{noise\PYGZus{}num}\PYG{p}{)}
+
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{sample}\PYG{p}{)):}
+        \PYG{k}{if} \PYG{n}{features}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{seq}\PYG{p}{]}\PYG{o}{==}\PYG{n}{condition} \PYG{o+ow}{and} \PYG{n}{tag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{==}\PYG{n}{conclusion}\PYG{p}{:}
+            \PYG{n}{Ixy}\PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{noise}\PYG{p}{)):}
+        \PYG{k}{if} \PYG{n}{noise\PYGZus{}features}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{seq}\PYG{p}{]}\PYG{o}{==}\PYG{n}{condition} \PYG{o+ow}{and} \PYG{n}{noise\PYGZus{}tag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{==}\PYG{n}{conclusion}\PYG{p}{:}
+            \PYG{n}{Ixy}\PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{n}{result}\PYG{o}{=}\PYG{n}{Ixy}\PYG{o}{/}\PYG{n}{Iy}
+    \PYG{n}{data\PYGZus{}row}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{result}
+
+\PYG{k}{def} \PYG{n+nf}{united\PYGZus{}probability}\PYG{p}{(}\PYG{n}{x\PYGZus{}features}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{,}\PYG{n}{conclusion}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{):}
+    \PYG{n}{result}\PYG{o}{=}\PYG{n}{conditional\PYGZus{}probability}\PYG{p}{(}\PYG{n}{conclusion}\PYG{p}{,}\PYG{n}{x\PYGZus{}features}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{o}{*}
+           \PYG{n}{conditional\PYGZus{}probability}\PYG{p}{(}\PYG{n}{conclusion}\PYG{p}{,}\PYG{n}{x\PYGZus{}features}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{prior\PYGZus{}probability}\PYG{p}{(}\PYG{n}{conclusion}\PYG{p}{)}
+    \PYG{n}{data\PYGZus{}row}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{result}
+
+\PYG{k}{def} \PYG{n+nf}{bayes\PYGZus{}arg\PYGZus{}max}\PYG{p}{(}\PYG{n}{x\PYGZus{}features}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{):}
+    \PYG{n}{max\PYGZus{}probability}\PYG{p}{:}\PYG{n+nb}{float}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{n}{max\PYGZus{}conclusion}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{10}\PYG{p}{):}
+        \PYG{n}{p}\PYG{o}{=}\PYG{n}{united\PYGZus{}probability}\PYG{p}{(}\PYG{n}{x\PYGZus{}features}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{p}\PYG{o}{\PYGZgt{}}\PYG{n}{max\PYGZus{}probability}\PYG{p}{:}
+            \PYG{n}{max\PYGZus{}probability}\PYG{o}{=}\PYG{n}{p}
+            \PYG{n}{max\PYGZus{}conclusion}\PYG{o}{=}\PYG{n}{k}
+
+    \PYG{n}{data\PYGZus{}row}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{max\PYGZus{}conclusion}\PYG{p}{)}
+    \PYG{n}{data\PYGZus{}row}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{max\PYGZus{}probability}\PYG{p}{)}
+    \PYG{n}{writer}\PYG{o}{.}\PYG{n}{writerow}\PYG{p}{(}\PYG{n}{data\PYGZus{}row}\PYG{p}{)}
+    \PYG{n}{data\PYGZus{}row}\PYG{o}{.}\PYG{n}{clear}\PYG{p}{()}
+    \PYG{k}{return} \PYG{n}{max\PYGZus{}conclusion}
+\end{Verbatim}

@@ -1,0 +1,43 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{word\PYGZus{}vectorizer}\PYG{o}{=}\PYG{n}{TfidfVectorizer}\PYG{p}{(}\PYG{n}{sublinear\PYGZus{}tf}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}
+\PYG{n}{strip\PYGZus{}accents}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}unicode\PYGZsq{}}\PYG{p}{,}
+\PYG{n}{analyzer}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}word\PYGZsq{}}\PYG{p}{,}
+\PYG{n}{token\PYGZus{}pattern}\PYG{o}{=}\PYG{l+s+sa}{r}\PYG{l+s+s1}{\PYGZsq{}\PYGZbs{}w\PYGZob{}1,\PYGZcb{}\PYGZsq{}}\PYG{p}{,}
+\PYG{n}{stop\PYGZus{}words}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}english\PYGZsq{}}\PYG{p}{,}
+\PYG{n}{ngram\PYGZus{}range}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{),}
+\PYG{n}{max\PYGZus{}features}\PYG{o}{=}\PYG{l+m+mi}{10000}\PYG{p}{,}
+\PYG{p}{)}
+\PYG{n}{word\PYGZus{}vectorizer}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{train\PYGZus{}rawdata}\PYG{o}{+}\PYG{n}{test\PYGZus{}rawdata}\PYG{p}{)}
+\PYG{n}{train\PYGZus{}word\PYGZus{}features} \PYG{o}{=} \PYG{n}{word\PYGZus{}vectorizer}\PYG{o}{.}\PYG{n}{transform}\PYG{p}{(}\PYG{n}{train\PYGZus{}rawdata}\PYG{p}{)}
+\PYG{n}{test\PYGZus{}word\PYGZus{}features} \PYG{o}{=} \PYG{n}{word\PYGZus{}vectorizer}\PYG{o}{.}\PYG{n}{transform}\PYG{p}{(}\PYG{n}{test\PYGZus{}rawdata}\PYG{p}{)}
+
+\PYG{n}{X\PYGZus{}train} \PYG{o}{=} \PYG{n}{train\PYGZus{}word\PYGZus{}features}
+\PYG{n}{y\PYGZus{}train} \PYG{o}{=} \PYG{n}{train\PYGZus{}tag}
+\PYG{n}{x\PYGZus{}train\PYGZus{}}\PYG{p}{,} \PYG{n}{x\PYGZus{}valid\PYGZus{}}\PYG{p}{,} \PYG{n}{y\PYGZus{}train\PYGZus{}}\PYG{p}{,} \PYG{n}{y\PYGZus{}valid\PYGZus{}} \PYG{o}{=} \PYG{n}{train\PYGZus{}test\PYGZus{}split}\PYG{p}{(}\PYG{n}{X\PYGZus{}train}\PYG{p}{,} \PYG{n}{y\PYGZus{}train}\PYG{p}{,} \PYG{n}{test\PYGZus{}size}\PYG{o}{=}\PYG{l+m+mf}{0.1}\PYG{p}{)}
+
+\PYG{n}{classifier}\PYG{o}{=}\PYG{n}{LogisticRegression}\PYG{p}{(}\PYG{n}{C}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{)}
+\PYG{n}{classifier}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{x\PYGZus{}train\PYGZus{}}\PYG{p}{,}\PYG{n}{y\PYGZus{}train\PYGZus{}}\PYG{p}{)}
+
+\PYG{n}{y\PYGZus{}pred} \PYG{o}{=} \PYG{n}{classifier}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{x\PYGZus{}valid\PYGZus{}}\PYG{p}{)}
+\PYG{n}{y\PYGZus{}score}\PYG{o}{=}\PYG{n}{classifier}\PYG{o}{.}\PYG{n}{decision\PYGZus{}function}\PYG{p}{(}\PYG{n}{x\PYGZus{}valid\PYGZus{}}\PYG{p}{)}
+\PYG{n}{train\PYGZus{}scores} \PYG{o}{=} \PYG{n}{classifier}\PYG{o}{.}\PYG{n}{score}\PYG{p}{(}\PYG{n}{x\PYGZus{}train\PYGZus{}}\PYG{p}{,} \PYG{n}{y\PYGZus{}train\PYGZus{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{train\PYGZus{}scores}\PYG{p}{,} \PYG{n}{f1\PYGZus{}score}\PYG{p}{(}\PYG{n}{y\PYGZus{}pred}\PYG{p}{,} \PYG{n}{y\PYGZus{}valid\PYGZus{}}\PYG{p}{,} \PYG{n}{average}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}macro\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{14}\PYG{p}{):}
+    \PYG{n}{fpr}\PYG{p}{,}\PYG{n}{tpr}\PYG{p}{,}\PYG{n}{\PYGZus{}}\PYG{o}{=}\PYG{n}{roc\PYGZus{}curve}\PYG{p}{(}\PYG{n}{y\PYGZus{}valid\PYGZus{}}\PYG{p}{,}\PYG{n}{y\PYGZus{}score}\PYG{p}{[:,}\PYG{n}{i}\PYG{p}{],}\PYG{n}{pos\PYGZus{}label}\PYG{o}{=}\PYG{n}{i}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{fpr}\PYG{p}{,} \PYG{n}{tpr}\PYG{p}{,}  \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{([}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}navy\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{linestyle}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}False Positive Rate\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}True Positive Rate\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Receiver Operating Characteristic Curve\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}lower right\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+
+\PYG{n}{cm} \PYG{o}{=} \PYG{n}{confusion\PYGZus{}matrix}\PYG{p}{(}\PYG{n}{y\PYGZus{}valid\PYGZus{}}\PYG{p}{,} \PYG{n}{y\PYGZus{}pred}\PYG{p}{)}
+
+\PYG{n}{sns}\PYG{o}{.}\PYG{n}{heatmap}\PYG{p}{(}\PYG{n}{cm}\PYG{p}{,} \PYG{n}{annot}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,} \PYG{n}{cmap}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Blues\PYGZsq{}}\PYG{p}{,} \PYG{n}{fmt}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}g\PYGZsq{}}\PYG{p}{,} \PYG{n}{cbar}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Confusion Matrix Heatmap\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Predicted Label\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}True Label\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{total} \PYG{n}{sample} \PYG{n}{number} \PYG{o+ow}{is} \PYG{l+m+mi}{162}
+    \PYG{n}{total} \PYG{n}{noise} \PYG{n}{number} \PYG{o+ow}{is} \PYG{l+m+mi}{1581}
+    \PYG{n}{total} \PYG{n}{test} \PYG{n}{number} \PYG{o+ow}{is} \PYG{l+m+mi}{82}
+    \PYG{n}{the} \PYG{n}{acc} \PYG{o+ow}{is} \PYG{l+m+mf}{0.36585365853658536}
+\end{Verbatim}

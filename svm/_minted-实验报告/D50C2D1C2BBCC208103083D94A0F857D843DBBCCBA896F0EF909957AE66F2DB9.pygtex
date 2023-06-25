@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{model} \PYG{n}{eta}\PYG{p}{:} \PYG{l+m+mf}{0.0005}
+    \PYG{n}{model} \PYG{n}{beta}\PYG{p}{:} \PYG{l+m+mf}{0.01}
+    \PYG{n}{time} \PYG{n}{consume}\PYG{p}{:} \PYG{l+m+mf}{12.698193311691284}\PYG{n}{s}
+\end{Verbatim}

@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{test}\PYG{p}{)):}
+    \PYG{n}{pred}\PYG{o}{=}\PYG{n}{bayes\PYGZus{}arg\PYGZus{}max}\PYG{p}{(}\PYG{n}{test\PYGZus{}features}\PYG{p}{[}\PYG{n}{k}\PYG{p}{])}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{test}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{test}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}s\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{n}{pred}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{15}\PYG{p}{,} \PYG{n}{alpha}\PYG{o}{=}\PYG{l+m+mf}{0.5}\PYG{p}{)}
+    \PYG{k}{if} \PYG{n}{pred}\PYG{o}{==}\PYG{n}{test\PYGZus{}tag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]:}
+        \PYG{n}{correct}\PYG{o}{+=}\PYG{l+m+mi}{1}
+
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acc is \PYGZdq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{correct}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{test}\PYG{p}{)))}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}total sample number: \PYGZdq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{total\PYGZus{}samplenum}\PYG{p}{))}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}total test number: \PYGZdq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{total\PYGZus{}testnum}\PYG{p}{))}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}total noise number: \PYGZdq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{noise\PYGZus{}num}\PYG{p}{))}
+\PYG{n}{file}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\end{Verbatim}

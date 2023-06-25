@@ -1,0 +1,36 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{svm\PYGZus{}classifier}\PYG{p}{:}
+    \PYG{o}{...}
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}train\PYGZus{}lagrange}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{iternum}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{):}
+        \PYG{n+nb}{iter}\PYG{o}{=}\PYG{l+m+mi}{0}
+        \PYG{n}{yi}\PYG{o}{=}\PYG{l+m+mf}{0.03}
+        \PYG{n}{x1}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{n}{value}\PYG{o}{*}\PYG{n}{y}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{]} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)])}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{))}
+        \PYG{k}{while} \PYG{n+nb}{iter}\PYG{o}{\PYGZlt{}}\PYG{n}{iternum}\PYG{p}{:}
+            \PYG{n}{alpha\PYGZus{}old}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}
+            \PYG{n}{alpha\PYGZus{}new}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{\PYGZhy{}}\PYG{n}{yi}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{x1}\PYG{n+nd}{@x1}\PYG{o}{.}\PYG{n}{T}\PYG{n+nd}{@self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}lambda}\PYG{o}{*}\PYG{n}{y}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{beta}\PYG{o}{*}\PYG{n}{y}\PYG{n+nd}{@self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{*}\PYG{n}{y}\PYG{p}{)}
+            \PYG{n}{alpha\PYGZus{}new}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{alpha\PYGZus{}new}\PYG{o}{\PYGZgt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{p}{,}\PYG{n}{alpha\PYGZus{}new}\PYG{p}{)}
+            \PYG{n}{alpha\PYGZus{}new}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{alpha\PYGZus{}new}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{alpha\PYGZus{}new}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{=}\PYG{n}{alpha\PYGZus{}new}
+            \PYG{n}{\PYGZus{}lambda\PYGZus{}old}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}lambda}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}lambda}\PYG{o}{=}\PYG{n}{\PYGZus{}lambda\PYGZus{}old}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{beta}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{y}\PYG{n+nd}{@self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)}
+            \PYG{n+nb}{iter}\PYG{o}{+=}\PYG{l+m+mi}{1}
+            \PYG{k}{if} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{alpha\PYGZus{}old}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{))}\PYG{o}{\PYGZlt{}}\PYG{l+m+mf}{1e\PYGZhy{}6}\PYG{p}{:}
+                \PYG{k}{break}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{alpha\PYGZus{}old}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)))}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{omega}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha2omega}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+        \PYG{n}{a1}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{n}{value} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)} \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{\PYGZgt{}}\PYG{n}{value}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{])}
+        \PYG{n}{a2}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{n}{value} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{a1}\PYG{p}{)} \PYG{k}{if} \PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{n}{a1}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.01}\PYG{o}{\PYGZgt{}}\PYG{n}{value}\PYG{o}{\PYGZgt{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{min}\PYG{p}{(}\PYG{n}{a1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mf}{0.01}\PYG{p}{])}
+        \PYG{n}{op}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{median}\PYG{p}{(}\PYG{n}{a2}\PYG{p}{)}
+        \PYG{n}{op1}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{min}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{a2}\PYG{o}{\PYGZhy{}}\PYG{n}{op}\PYG{p}{))}
+        \PYG{n}{j}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{argmin}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{a2}\PYG{o}{\PYGZhy{}}\PYG{n}{op}\PYG{p}{))}
+        \PYG{n}{op}\PYG{o}{=}\PYG{n}{a2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}
+        \PYG{n}{j}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{argmin}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{\PYGZhy{}}\PYG{n}{op}\PYG{p}{))}
+        \PYG{n}{u}\PYG{o}{=}\PYG{l+m+mi}{0}
+        \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)):}
+            \PYG{n}{u}\PYG{o}{+=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{\PYGZus{}}\PYG{p}{]}\PYG{o}{*}\PYG{n}{y}\PYG{p}{[}\PYG{n}{\PYGZus{}}\PYG{p}{]}\PYG{o}{*}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{\PYGZus{}}\PYG{p}{]}\PYG{n+nd}{@x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{=}\PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{u}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mark\PYGZus{}sv}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+        \PYG{n}{print\PYGZus{}line}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{omega}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{p}{)}
+\end{Verbatim}

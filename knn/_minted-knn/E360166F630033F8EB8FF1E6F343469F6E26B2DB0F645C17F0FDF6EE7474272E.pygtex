@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{total}\PYG{+w}{ }\PYG{n}{sample}\PYG{+w}{ }\PYG{n}{number}\PYG{+w}{ }\PYG{n}{is}\PYG{+w}{ }\PYG{l+m+mi}{84}
+\PYG{n}{total}\PYG{+w}{ }\PYG{n}{test}\PYG{+w}{ }\PYG{n}{number}\PYG{+w}{ }\PYG{n}{is}\PYG{+w}{ }\PYG{l+m+mi}{402}
+\PYG{n}{the}\PYG{+w}{ }\PYG{n}{acc}\PYG{+w}{ }\PYG{n}{is}\PYG{+w}{ }\PYG{l+m+mf}{0.9203980099502488}
+\end{Verbatim}

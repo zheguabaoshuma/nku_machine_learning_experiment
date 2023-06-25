@@ -1,0 +1,76 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{seed}\PYG{p}{(}\PYG{l+m+mi}{25565}\PYG{p}{)}
+    \PYG{n}{sample}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{rand}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{10}
+    \PYG{n}{tag}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)}
+    \PYG{n}{test}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{rand}\PYG{p}{(}\PYG{l+m+mi}{500}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{10}
+    \PYG{n}{test\PYGZus{}tag}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{l+m+mi}{500}\PYG{p}{)}
+    \PYG{n}{default\PYGZus{}color}\PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}1f77b4\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}ff7f0e\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}2ca02c\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}d62728\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}9467bd\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}8c564b\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}e377c2\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}7f7f7f\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}bcbd22\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}17becf\PYGZsq{}}\PYG{p}{]}
+
+
+    \PYG{n}{center1}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{1.5}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{])}
+    \PYG{n}{sample1}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center1}
+    \PYG{n}{center2}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mi}{5}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{])}
+    \PYG{n}{sample2}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center2}
+    \PYG{n}{center3}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{8.5}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{])}
+    \PYG{n}{sample3}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center3}
+    \PYG{n}{center4}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{1.5}\PYG{p}{,}\PYG{l+m+mi}{5}\PYG{p}{])}
+    \PYG{n}{sample4}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center4}
+    \PYG{n}{center5}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mi}{5}\PYG{p}{,}\PYG{l+m+mi}{5}\PYG{p}{])}
+    \PYG{n}{sample5}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center5}
+    \PYG{n}{center6}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{8.5}\PYG{p}{,}\PYG{l+m+mi}{5}\PYG{p}{])}
+    \PYG{n}{sample6}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center6}
+    \PYG{n}{center7}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{1.5}\PYG{p}{,}\PYG{l+m+mf}{8.5}\PYG{p}{])}
+    \PYG{n}{sample7}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center7}
+    \PYG{n}{center8}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mi}{5}\PYG{p}{,}\PYG{l+m+mf}{8.5}\PYG{p}{])}
+    \PYG{n}{sample8}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center8}
+    \PYG{n}{center9}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{8.5}\PYG{p}{,}\PYG{l+m+mf}{8.5}\PYG{p}{])}
+    \PYG{n}{sample9}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randn}\PYG{p}{(}\PYG{l+m+mi}{600}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mf}{0.8}\PYG{o}{+}\PYG{n}{center9}
+    \PYG{n}{samplen}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{concatenate}\PYG{p}{([}\PYG{n}{sample1}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample2}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample3}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample4}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample5}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample6}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample7}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample8}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{],} \PYG{n}{sample9}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{]])}
+    \PYG{n}{testn}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{concatenate}\PYG{p}{([}\PYG{n}{sample1}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample2}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample3}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample4}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample5}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample6}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample7}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample8}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{],} \PYG{n}{sample9}\PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{600}\PYG{p}{]])}
+    \PYG{n}{ntag}\PYG{o}{=}\PYG{p}{[]}
+    \PYG{n}{ntest\PYGZus{}tag}\PYG{o}{=}\PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{9}\PYG{p}{):}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{o}{*}\PYG{l+m+mi}{100}\PYG{p}{:(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{o}{*}\PYG{l+m+mi}{100}\PYG{p}{:(}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{n}{k}\PYG{p}{])}
+        \PYG{c+c1}{\PYGZsh{}plt.scatter(testn[k*500:(k+1)*500,0], testn[k*500:(k+1)*500,1], marker=\PYGZsq{}s\PYGZsq{}, alpha=0.5, s=15, color=default\PYGZus{}color[k])}
+        \PYG{n}{ntag}\PYG{o}{+=}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{o}{*}\PYG{p}{[}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{])}
+        \PYG{n}{ntest\PYGZus{}tag}\PYG{o}{+=}\PYG{p}{(}\PYG{l+m+mi}{500}\PYG{o}{*}\PYG{p}{[}\PYG{n}{k}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{])}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+    \PYG{n}{total\PYGZus{}samplenum}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{c+c1}{\PYGZsh{}plt.scatter(sample[:,0],sample[:,1])}
+
+    \PYG{k}{def} \PYG{n+nf}{sort\PYGZus{}key}\PYG{p}{(}\PYG{n}{item}\PYG{p}{:}\PYG{n+nb}{tuple}\PYG{p}{):}
+        \PYG{k}{return} \PYG{n}{item}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+
+    \PYG{k}{def} \PYG{n+nf}{knn\PYGZus{}predict}\PYG{p}{(}\PYG{n}{point}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{,}\PYG{n}{n}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{)}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n+nb}{int}\PYG{p}{:}
+        \PYG{n}{dist}\PYG{p}{:}\PYG{n+nb}{list}\PYG{o}{=}\PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{samplen}\PYG{p}{)):}
+            \PYG{k}{if} \PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{==\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}
+                \PYG{k}{continue}
+            \PYG{n}{eu\PYGZus{}dis}\PYG{o}{=}\PYG{p}{(}\PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{point}\PYG{p}{)}\PYG{o}{@}\PYG{p}{(}\PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{point}\PYG{p}{)}
+            \PYG{n}{man\PYGZus{}dis}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{point}\PYG{p}{))}
+            \PYG{n}{inf\PYGZus{}dis}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{samplen}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{n}{point}\PYG{p}{))}
+            \PYG{n}{dist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{eu\PYGZus{}dis}\PYG{p}{,}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{ntag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{])))}
+        \PYG{n}{dist}\PYG{o}{.}\PYG{n}{sort}\PYG{p}{(}\PYG{n}{key}\PYG{o}{=}\PYG{n}{sort\PYGZus{}key}\PYG{p}{)}
+        \PYG{n}{vote}\PYG{p}{:}\PYG{n+nb}{list}\PYG{o}{=}\PYG{n}{dist}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{n}{n}\PYG{p}{]}
+        \PYG{n}{result}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{)}
+        \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{vote}\PYG{p}{)):}
+            \PYG{n}{result}\PYG{p}{[}\PYG{n}{vote}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]]}\PYG{o}{+=}\PYG{l+m+mi}{1}
+        \PYG{k}{return} \PYG{n}{result}\PYG{o}{.}\PYG{n}{argmax}\PYG{p}{()}
+    \PYG{n}{correct}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{n}{totalnum}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{testn}\PYG{p}{)):}
+        \PYG{c+c1}{\PYGZsh{} if testn[k][0]==\PYGZhy{}1:}
+        \PYG{c+c1}{\PYGZsh{}     continue}
+        \PYG{c+c1}{\PYGZsh{}else:}
+            \PYG{n}{ans}\PYG{o}{=}\PYG{n}{knn\PYGZus{}predict}\PYG{p}{(}\PYG{n}{testn}\PYG{p}{[}\PYG{n}{k}\PYG{p}{],}\PYG{l+m+mi}{10}\PYG{p}{)}
+            \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{testn}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{testn}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}s\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{ntest\PYGZus{}tag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)],} \PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{15}\PYG{p}{,} \PYG{n}{alpha}\PYG{o}{=}\PYG{l+m+mf}{0.5}\PYG{p}{)}
+            \PYG{n}{totalnum}\PYG{o}{+=}\PYG{l+m+mi}{1}
+            \PYG{k}{if} \PYG{n}{ans}\PYG{o}{==}\PYG{n}{ntest\PYGZus{}tag}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]:}
+                \PYG{n}{correct}\PYG{o}{+=}\PYG{l+m+mi}{1}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+
+    \PYG{c+c1}{\PYGZsh{}print(\PYGZsq{}total sample number is \PYGZsq{}+str(total\PYGZus{}samplenum))}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}total test number is \PYGZsq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{totalnum}\PYG{p}{))}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}the acc is \PYGZsq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{correct}\PYG{o}{/}\PYG{n}{totalnum}\PYG{p}{))}
+
+\end{Verbatim}

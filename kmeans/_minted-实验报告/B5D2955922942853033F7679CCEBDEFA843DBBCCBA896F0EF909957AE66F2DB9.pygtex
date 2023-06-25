@@ -1,0 +1,47 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k}{as} \PYG{n+nn}{plt}
+
+\PYG{n}{default\PYGZus{}color}\PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}1f77b4\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}ff7f0e\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}2ca02c\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}d62728\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}9467bd\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}8c564b\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}e377c2\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}7f7f7f\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}bcbd22\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}17becf\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{seed}\PYG{p}{(}\PYG{l+m+mi}{25565}\PYG{p}{)}
+\PYG{n}{samples}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{rand}\PYG{p}{(}\PYG{l+m+mi}{2000}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{9}
+\PYG{n}{samples}\PYG{o}{=}\PYG{n}{samples}\PYG{o}{.}\PYG{n}{tolist}\PYG{p}{()}
+\PYG{n}{tags}\PYG{o}{=}\PYG{p}{[]}
+\PYG{n}{center\PYGZus{}index}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{2000}\PYG{p}{,}\PYG{l+m+mi}{9}\PYG{p}{)}
+\PYG{n}{centers}\PYG{o}{=}\PYG{p}{[}\PYG{n}{samples}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{center\PYGZus{}index}\PYG{p}{]}
+\PYG{k}{for} \PYG{n}{C} \PYG{o+ow}{in} \PYG{n}{centers}\PYG{p}{:}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{C}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{C}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{30}\PYG{p}{,}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}s\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{centers}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{centers}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{point} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{samples}\PYG{p}{):}
+    \PYG{k}{if} \PYG{l+m+mi}{3}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{l+m+mi}{3}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{6}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{3} \PYG{o+ow}{and} \PYG{l+m+mi}{3}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{9}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{6} \PYG{o+ow}{and} \PYG{l+m+mi}{3}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{3}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{l+m+mi}{6}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{3}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{6}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{3} \PYG{o+ow}{and} \PYG{l+m+mi}{6}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{3}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{9}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{6} \PYG{o+ow}{and} \PYG{l+m+mi}{6}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{3}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{3}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{l+m+mi}{9}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{6}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{6}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{6}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{3} \PYG{o+ow}{and} \PYG{l+m+mi}{9}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{6}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{7}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{k}{elif} \PYG{l+m+mi}{9}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{6} \PYG{o+ow}{and} \PYG{l+m+mi}{9}\PYG{o}{\PYGZgt{}}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{6}\PYG{p}{:}
+        \PYG{n}{tags}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+m+mi}{8}\PYG{p}{)}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{point}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}3\PYGZsq{}}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{n}{default\PYGZus{}color}\PYG{p}{[}\PYG{l+m+mi}{8}\PYG{p}{],}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+
+\PYG{n}{samples}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{samples}\PYG{p}{)}
+\PYG{n}{tags}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{tags}\PYG{p}{)}
+\end{Verbatim}

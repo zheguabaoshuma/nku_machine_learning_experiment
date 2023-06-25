@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{train\PYGZus{}df} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}train\PYGZus{}set.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{train\PYGZus{}tag}\PYG{o}{=}\PYG{n}{train\PYGZus{}df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}label\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{train\PYGZus{}rawdata}\PYG{o}{=}\PYG{p}{[}\PYG{n}{data} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{data} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{train\PYGZus{}df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}text\PYGZsq{}}\PYG{p}{])]}
+\PYG{n}{train\PYGZus{}data}\PYG{o}{=}\PYG{p}{[}\PYG{n}{data}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{)} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{data} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{train\PYGZus{}df}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[:,}\PYG{l+m+mi}{1}\PYG{p}{])]}
+
+\PYG{n}{test\PYGZus{}df} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}test\PYGZus{}a.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{test\PYGZus{}rawdata}\PYG{o}{=}\PYG{p}{[}\PYG{n}{data} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{data} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{test\PYGZus{}df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}text\PYGZsq{}}\PYG{p}{])]}
+\PYG{n}{test\PYGZus{}data}\PYG{o}{=}\PYG{p}{[}\PYG{n}{data}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{)} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{data} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{test\PYGZus{}df}\PYG{o}{.}\PYG{n}{iloc}\PYG{p}{[:])]}
+
+\PYG{k}{try}\PYG{p}{:}
+    \PYG{n}{word2vec\PYGZus{}model}\PYG{o}{=}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Word2Vec}\PYG{o}{.}\PYG{n}{load}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}word2vec.model\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}load complete\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{except}\PYG{p}{:}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}no model\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{word2vec\PYGZus{}model}\PYG{o}{=}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Word2Vec}\PYG{p}{(}\PYG{n}{sentences}\PYG{o}{=}\PYG{n}{train\PYGZus{}data}\PYG{o}{+}\PYG{n}{test\PYGZus{}data}\PYG{p}{,} \PYG{n}{vector\PYGZus{}size}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{n}{workers}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{p}{)}
+    \PYG{n}{word2vec\PYGZus{}model}\PYG{o}{.}\PYG{n}{save}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}word2vec.model\PYGZsq{}}\PYG{p}{)}
+
+\end{Verbatim}

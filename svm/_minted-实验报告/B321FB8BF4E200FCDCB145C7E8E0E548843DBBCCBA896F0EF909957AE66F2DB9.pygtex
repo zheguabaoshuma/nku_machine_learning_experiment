@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{svm\PYGZus{}classifier}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{C}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{,} \PYG{n}{kernel}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}linear\PYGZsq{}}\PYG{p}{,} \PYG{n}{max\PYGZus{}iter}\PYG{o}{=}\PYG{l+m+mi}{1000}\PYG{p}{):}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C} \PYG{o}{=} \PYG{n}{C}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel} \PYG{o}{=} \PYG{n}{kernel}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}iter} \PYG{o}{=} \PYG{n}{max\PYGZus{}iter}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{=}\PYG{l+m+mi}{0}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{o}{=}\PYG{l+m+mf}{1e\PYGZhy{}3}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}lambda}\PYG{o}{=}\PYG{l+m+mi}{0}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{beta}\PYG{o}{=}\PYG{l+m+mf}{0.01}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{eta}\PYG{o}{=}\PYG{l+m+mf}{1e\PYGZhy{}4}
+
+    \PYG{k}{def} \PYG{n+nf}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{x1}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,} \PYG{n}{x2}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}linear\PYGZsq{}}\PYG{p}{:}
+            \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{dot}\PYG{p}{(}\PYG{n}{x1}\PYG{p}{,} \PYG{n}{x2}\PYG{p}{)}
+        \PYG{k}{elif} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}gaussian\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{sigma} \PYG{o}{=} \PYG{l+m+mf}{1.0}
+            \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linalg}\PYG{o}{.}\PYG{n}{norm}\PYG{p}{(}\PYG{n}{x1} \PYG{o}{\PYGZhy{}} \PYG{n}{x2}\PYG{p}{)} \PYG{o}{**} \PYG{l+m+mi}{2} \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{p}{(}\PYG{n}{sigma} \PYG{o}{**} \PYG{l+m+mi}{2}\PYG{p}{)))}
+
+    \PYG{k}{def} \PYG{n+nf}{alpha2omega}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{alpha}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{)}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{:}\PYG{c+c1}{\PYGZsh{}convert alpha to omega}
+        \PYG{n}{omega}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]))}
+        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)):}
+            \PYG{n}{omega}\PYG{o}{+=}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{*}\PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{*}\PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+        \PYG{k}{return} \PYG{n}{omega}
+
+    \PYG{k}{def} \PYG{n+nf}{mark\PYGZus{}sv}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}\PYG{c+c1}{\PYGZsh{} highlight the support vector and margin}
+        \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{alpha} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{):}
+            \PYG{k}{if} \PYG{l+m+mi}{0}\PYG{o}{\PYGZlt{}}\PYG{n}{alpha}\PYG{o}{\PYGZlt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{p}{:}
+                \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{x}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{50}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}none\PYGZsq{}}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{edgecolors}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}blue\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{print\PYGZus{}line}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{omega}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}dashdot\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{print\PYGZus{}line}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{omega}\PYG{p}{,}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}dashdot\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

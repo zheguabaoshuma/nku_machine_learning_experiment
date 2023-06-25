@@ -1,0 +1,143 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{svm\PYGZus{}classifier}\PYG{p}{:}
+    \PYG{o}{...}
+    \PYG{k}{def} \PYG{n+nf}{refresh\PYGZus{}E}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+        \PYG{n}{Gx}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{o}{=}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{*}\PYG{n}{y}\PYG{p}{)}\PYG{o}{*}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{x}\PYG{n+nd}{@x}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,}\PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{o}{=}\PYG{n}{Gx}\PYG{o}{\PYGZhy{}}\PYG{n}{y}
+
+    \PYG{k}{def} \PYG{n+nf}{selectJ}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{length}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{):} \PYG{c+c1}{\PYGZsh{}call this function to obtain a j}
+        \PYG{n}{j}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{length}\PYG{p}{)}
+        \PYG{k}{while} \PYG{n}{i}\PYG{o}{==}\PYG{n}{j}\PYG{p}{:}
+            \PYG{n}{j}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{length}\PYG{p}{)}
+
+        \PYG{n}{random\PYGZus{}factor}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{100}\PYG{p}{)}
+        \PYG{n}{maxK} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+        \PYG{n}{maxDeltaE} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{idx}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{nonzero}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)[}\PYG{l+m+mi}{0}\PYG{p}{]}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{idx}\PYG{p}{)}\PYG{o}{!=}\PYG{l+m+mi}{0}\PYG{p}{):}
+            \PYG{k}{for} \PYG{n}{index} \PYG{o+ow}{in} \PYG{n}{idx}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n}{index}\PYG{o}{==}\PYG{n}{i}\PYG{p}{:}\PYG{k}{continue}
+                \PYG{n}{Eindex}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{index}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{y}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+                \PYG{n}{Ei}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{i}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+                \PYG{c+c1}{\PYGZsh{} eta = self.kernel\PYGZus{}function(x[i], x[i]) + self.kernel\PYGZus{}function(x[index], x[index]) \PYGZhy{} 2 * self.kernel\PYGZus{}function(x[i], x[index])}
+                \PYG{n}{eta}\PYG{o}{=}\PYG{l+m+mi}{1}
+                \PYG{n}{deltaE}\PYG{o}{=}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{Ei}\PYG{o}{\PYGZhy{}}\PYG{n}{Eindex}\PYG{p}{)}\PYG{o}{/}\PYG{n}{eta}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{deltaE} \PYG{o}{\PYGZgt{}} \PYG{n}{maxDeltaE}\PYG{p}{):}
+                    \PYG{n}{maxK} \PYG{o}{=} \PYG{n}{index}
+                    \PYG{n}{maxDeltaE} \PYG{o}{=} \PYG{n}{deltaE}
+            \PYG{c+c1}{\PYGZsh{} print(\PYGZsq{}choose \PYGZsq{}+str(maxK))}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{random\PYGZus{}factor}\PYG{p}{)}
+            \PYG{k}{if} \PYG{n}{random\PYGZus{}factor}\PYG{o}{\PYGZpc{}}\PYG{l+m+mi}{7}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}random choice\PYGZsq{}}\PYG{p}{)}
+                \PYG{k}{return} \PYG{n}{j}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{k}{return} \PYG{n}{maxK}
+        \PYG{k}{return} \PYG{n}{j}
+
+    \PYG{k}{def} \PYG{n+nf}{update\PYGZus{}b}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{j}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+        \PYG{n}{res1}\PYG{p}{:}\PYG{n+nb}{float}\PYG{o}{=}\PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+        \PYG{n}{res2}\PYG{p}{:}\PYG{n+nb}{float}\PYG{o}{=}\PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}
+        \PYG{c+c1}{\PYGZsh{}if  and}
+        \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)):}
+            \PYG{n}{res1}\PYG{o}{\PYGZhy{}=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{*}\PYG{n}{y}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{k}\PYG{p}{],}\PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+            \PYG{n}{res2}\PYG{o}{\PYGZhy{}=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{*}\PYG{n}{y}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{k}\PYG{p}{],}\PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])}
+
+        \PYG{k}{if} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{=}\PYG{n}{res1}
+        \PYG{k}{elif} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{=}\PYG{n}{res2}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}\PYG{o}{=}\PYG{p}{(}\PYG{n}{res1}\PYG{o}{+}\PYG{n}{res2}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{2}
+
+    \PYG{k}{def} \PYG{n+nf}{g}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):} \PYG{c+c1}{\PYGZsh{}use to calculate the model output based on current alpha}
+        \PYG{n}{res}\PYG{p}{:}\PYG{n+nb}{float}\PYG{o}{=}\PYG{l+m+mi}{0}
+        \PYG{n}{index}\PYG{o}{=}\PYG{p}{[}\PYG{n}{index} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)} \PYG{k}{if} \PYG{n}{value} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{]}
+        \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n}{index}\PYG{p}{:}
+            \PYG{n}{res}\PYG{o}{+=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{*}\PYG{n}{y}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{x}\PYG{p}{[}\PYG{n}{k}\PYG{p}{])}
+        \PYG{k}{return} \PYG{n}{res}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}
+
+    \PYG{k}{def} \PYG{n+nf}{update}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{j}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{):} \PYG{c+c1}{\PYGZsh{}SMO update parameters}
+        \PYG{n}{alpha\PYGZus{}update}\PYG{p}{:}\PYG{n+nb}{bool}\PYG{o}{=}\PYG{k+kc}{False}
+        \PYG{k}{if} \PYG{n}{j}\PYG{o}{==\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}
+            \PYG{n}{j} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{selectJ}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{))}
+        \PYG{n}{eta} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{kernel\PYGZus{}function}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])}
+        \PYG{k}{if} \PYG{n}{eta} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:} \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{j}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}
+
+        \PYG{k}{if} \PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{!=}\PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]:}
+            \PYG{n}{L} \PYG{o}{=} \PYG{n+nb}{max}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+            \PYG{n}{H} \PYG{o}{=} \PYG{n+nb}{min}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{L} \PYG{o}{=} \PYG{n+nb}{max}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{p}{)}
+            \PYG{n}{H} \PYG{o}{=} \PYG{n+nb}{min}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+        \PYG{n}{alpha\PYGZus{}newj} \PYG{o}{=} \PYGZbs{}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{+} \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{*} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{o}{/} \PYG{n}{eta}
+        \PYG{n}{alpha\PYGZus{}oldj} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}
+
+        \PYG{k}{if} \PYG{n}{alpha\PYGZus{}newj} \PYG{o}{\PYGZgt{}} \PYG{n}{H}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{H}
+        \PYG{k}{elif} \PYG{n}{alpha\PYGZus{}newj} \PYG{o}{\PYGZlt{}} \PYG{n}{L}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{L}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{alpha\PYGZus{}newj}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{+} \PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{*} \PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{*} \PYG{p}{(}\PYG{n}{alpha\PYGZus{}oldj} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}b}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{i}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{j}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{y}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}
+        \PYG{k}{if} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{alpha\PYGZus{}newj} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]))} \PYG{o}{\PYGZlt{}} \PYG{l+m+mf}{1e\PYGZhy{}10}\PYG{p}{:}
+            \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{c+c1}{\PYGZsh{}\PYGZhy{}2 means tiny update, time to change a new strategy}
+        \PYG{k}{return} \PYG{l+m+mi}{1}\PYG{c+c1}{\PYGZsh{}normal status}
+
+    \PYG{k}{def} \PYG{n+nf}{check\PYGZus{}kkt}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{i}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{)}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n+nb}{bool}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{}check if a point is satisfied with kkt conditions}
+        \PYG{n}{kkt}\PYG{o}{=}\PYG{k+kc}{False}
+        \PYG{n}{check\PYGZus{}kkt}\PYG{o}{=}\PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{i}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{check\PYGZus{}kkt}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{or} \PYGZbs{}
+                \PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o}{\PYGZlt{}} \PYG{n}{check\PYGZus{}kkt} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{1}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}
+            \PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{or} \PYGZbs{}
+                \PYG{n}{check\PYGZus{}kkt}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{:}
+            \PYG{n}{kkt}\PYG{o}{=}\PYG{k+kc}{True}
+        \PYG{k}{return} \PYG{n}{kkt}
+
+    \PYG{k}{def} \PYG{n+nf}{all\PYGZus{}check\PYGZus{}kkt}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{)}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n+nb}{bool}\PYG{p}{:} \PYG{c+c1}{\PYGZsh{}check if all point is satisfied with kkt conditions.}
+        \PYG{n}{kkt}\PYG{o}{=}\PYG{k+kc}{False}
+        \PYG{n}{Gx}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{*}\PYG{n}{y}\PYG{o}{@}\PYG{p}{(}\PYG{n}{x}\PYG{n+nd}{@x}\PYG{o}{.}\PYG{n}{T}\PYG{p}{)}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b}
+        \PYG{n}{check\PYGZus{}kkt}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{o}{=}\PYG{n}{y}\PYG{o}{*}\PYG{n}{Gx}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+        \PYG{n}{kkt\PYGZus{}unsatisfy1}\PYG{o}{=}\PYG{p}{[}\PYG{n}{idx} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)} \PYG{k}{if} \PYG{n}{check\PYGZus{}kkt}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{]}\PYG{o}{\PYGZgt{}\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{o}{\PYGZgt{}}\PYG{n}{value} \PYG{o+ow}{or} \PYG{n}{value}\PYG{o}{\PYGZgt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{)]}
+        \PYG{n}{kkt\PYGZus{}unsatisfy2}\PYG{o}{=}\PYG{p}{[}\PYG{n}{idx} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)} \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{o}{\PYGZgt{}}\PYG{n}{check\PYGZus{}kkt}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{]}\PYG{o}{\PYGZgt{}\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{value}\PYG{o}{\PYGZlt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{or} \PYG{n}{value}\PYG{o}{\PYGZgt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{)]}
+        \PYG{n}{kkt\PYGZus{}unsatisfy3}\PYG{o}{=}\PYG{p}{[}\PYG{n}{idx} \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{)} \PYG{k}{if} \PYG{n}{check\PYGZus{}kkt}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{o}{\PYGZlt{}}\PYG{n}{value} \PYG{o+ow}{or} \PYG{n}{value}\PYG{o}{\PYGZlt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{)]}
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{kkt\PYGZus{}unsatisfy1}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{kkt\PYGZus{}unsatisfy2}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{kkt\PYGZus{}unsatisfy3}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{k}{return} \PYG{k+kc}{True}
+        \PYG{k}{else}\PYG{p}{:} \PYG{k}{return} \PYG{k+kc}{False}
+
+    \PYG{k}{def} \PYG{n+nf}{train}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{max\PYGZus{}internum}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{):} \PYG{c+c1}{\PYGZsh{}SMO training}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{))}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{omega}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha2omega}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{,}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{E}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{))}
+        \PYG{n}{iternum}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=}\PYG{l+m+mi}{0}
+        \PYG{n}{alpha\PYGZus{}update}\PYG{p}{:} \PYG{n+nb}{bool} \PYG{o}{=} \PYG{k+kc}{False}
+        \PYG{k}{while}\PYG{p}{(}\PYG{n}{iternum}\PYG{o}{\PYGZlt{}}\PYG{n}{max\PYGZus{}internum}\PYG{p}{):}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o+ow}{not} \PYG{n}{alpha\PYGZus{}update}\PYG{p}{)} \PYG{o+ow}{or} \PYG{n}{iternum}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{:}
+                \PYG{n}{alpha\PYGZus{}update}\PYG{o}{=}\PYG{k+kc}{True}
+                \PYG{k}{for} \PYG{n}{i1} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)):}
+                    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{check\PYGZus{}kkt}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{i1}\PYG{p}{,}\PYG{n}{y}\PYG{p}{):}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{i1}\PYG{p}{)}
+            \PYG{k}{if} \PYG{n}{alpha\PYGZus{}update}\PYG{p}{:}
+                \PYG{n}{alpha\PYGZus{}update}\PYG{o}{=}\PYG{k+kc}{False}
+                \PYG{k}{for} \PYG{n}{i2} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)):}
+                    \PYG{k}{if} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{o}{\PYGZgt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i2}\PYG{p}{]}\PYG{o}{\PYGZgt{}\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{n}{y}\PYG{p}{[}\PYG{n}{i2}\PYG{p}{]}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{i2}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{):}
+                        \PYG{n}{status}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{i2}\PYG{p}{)}
+                        \PYG{k}{if} \PYG{n}{status}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{:}
+                            \PYG{n}{alpha\PYGZus{}update}\PYG{o}{=}\PYG{k+kc}{True}
+                    \PYG{k}{elif} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{o}{\PYGZgt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{[}\PYG{n}{i2}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{C}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon} \PYG{o+ow}{and} \PYG{n}{y}\PYG{p}{[}\PYG{n}{i2}\PYG{p}{]}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{g}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{i2}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{):}
+                        \PYG{n}{status}\PYG{p}{:}\PYG{n+nb}{int}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{i2}\PYG{p}{)}
+                        \PYG{k}{if} \PYG{n}{status}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{p}{:}
+                            \PYG{n}{alpha\PYGZus{}update}\PYG{o}{=}\PYG{k+kc}{True}
+            \PYG{n}{iternum}\PYG{o}{+=}\PYG{l+m+mi}{1}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{iternum}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{omega}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha2omega}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mark\PYGZus{}sv}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+\end{Verbatim}

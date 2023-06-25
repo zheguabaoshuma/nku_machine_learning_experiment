@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{kmeans\PYGZus{}train}\PYG{p}{(}\PYG{n}{iternum}\PYG{p}{:}\PYG{n+nb}{int}\PYG{p}{,}\PYG{n}{x}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{y}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}\PYG{n}{centers}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+    \PYG{n+nb}{iter}\PYG{o}{=}\PYG{l+m+mi}{0}
+    \PYG{n}{pred\PYGZus{}tags}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{x}\PYG{p}{))}
+    \PYG{k}{while} \PYG{n+nb}{iter}\PYG{o}{\PYGZlt{}}\PYG{n}{iternum}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{point} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{x}\PYG{p}{):}
+            \PYG{n}{delta}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{o}{=}\PYG{n}{centers}\PYG{o}{\PYGZhy{}}\PYG{n}{point}
+            \PYG{n}{distance}\PYG{p}{:}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{delta}\PYG{o}{*}\PYG{n}{delta}\PYG{p}{,}\PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+            \PYG{n}{pred\PYGZus{}tags}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{]}\PYG{o}{=}\PYG{n}{distance}\PYG{o}{.}\PYG{n}{argmin}\PYG{p}{()}
+        \PYG{k}{for} \PYG{n}{idx}\PYG{p}{,}\PYG{n}{center} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{centers}\PYG{p}{):}
+            \PYG{n}{all\PYGZus{}points}\PYG{o}{=}\PYG{p}{[}\PYG{n}{value} \PYG{k}{for} \PYG{n}{index}\PYG{p}{,}\PYG{n}{value} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{k}{if} \PYG{n}{pred\PYGZus{}tags}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}\PYG{o}{==}\PYG{n}{idx}\PYG{p}{]}
+            \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{all\PYGZus{}points}\PYG{p}{)}\PYG{o}{!=}\PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{n}{avg\PYGZus{}center}\PYG{o}{=}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{all\PYGZus{}points}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{all\PYGZus{}points}\PYG{p}{)}
+                \PYG{n}{centers}\PYG{p}{[}\PYG{n}{idx}\PYG{p}{]}\PYG{o}{=}\PYG{n}{avg\PYGZus{}center}
+            \PYG{k}{else}\PYG{p}{:} \PYG{k}{continue}
+        \PYG{n+nb}{iter}\PYG{o}{+=}\PYG{l+m+mi}{1}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{n+nb}{iter}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{c} \PYG{o+ow}{in} \PYG{n}{centers}\PYG{p}{:}
+        \PYG{n}{plt}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{c}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{c}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,}\PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{,}\PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}1f1e33\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{kmeans\PYGZus{}train}\PYG{p}{(}\PYG{l+m+mi}{50000}\PYG{p}{,}\PYG{n}{samples}\PYG{p}{,}\PYG{n}{tags}\PYG{p}{,}\PYG{n}{centers}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}
